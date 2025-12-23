@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listing Launchpad | Omaha Drone Co.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        /* Custom "Glass" effect for the video cards */
+        .glass-panel {
+            background: rgba(31, 41, 55, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(75, 85, 99, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen font-sans">
+
+    <div id="login-view" class="flex flex-col items-center justify-center h-screen px-4">
+        <div class="glass-panel p-8 rounded-2xl shadow-2xl max-w-md w-full text-center">
+            <div class="mb-6">
+                <div class="h-12 w-12 bg-blue-500 rounded-lg mx-auto flex items-center justify-center text-2xl">🚁</div>
+            </div>
+            <h1 class="text-2xl font-bold mb-2">Realtor Portal</h1>
+            <p class="text-gray-400 mb-6">Access your drone footage & assets.</p>
+
+            <input type="email" id="email" placeholder="Enter your email" class="w-full p-3 mb-4 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500 transition">
+            <button onclick="handleLogin()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-lg transition shadow-lg shadow-blue-500/30">
+                Get Access Link
+            </button>
+            <p id="login-msg" class="mt-4 text-sm text-green-400 hidden">Check your email for the magic link!</p>
+        </div>
+    </div>
+
+    <div id="dashboard-view" class="hidden min-h-screen">
+        <nav class="border-b border-gray-800 bg-gray-900/90 sticky top-0 z-50">
+            <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+                <div class="font-bold text-xl flex items-center gap-2">
+                    <span class="text-blue-500">Listing</span>Launchpad
+                </div>
+                <button onclick="logout()" class="text-sm text-gray-400 hover:text-white">Sign Out</button>
+            </div>
+        </nav>
+
+        <main class="max-w-6xl mx-auto px-4 py-8">
+            <div class="flex justify-between items-end mb-8">
+                <div>
+                    <h2 class="text-3xl font-bold">Your Listings</h2>
+                    <p class="text-gray-400 mt-1">Manage and download your media assets.</p>
+                </div>
+                <button onclick="loadDemoData()" class="text-xs bg-gray-800 px-3 py-1 rounded border border-gray-700">Simulate Data</button>
+            </div>
+
+            <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                </div>
+        </main>
+    </div>
+
+    <script>
+        // --- 1. CONFIGURATION (Get these from Supabase Settings) ---
+        const SUPABASE_URL = 'https://hscvadvnkwnglooqphuu.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhzY3ZhZHZua3duZ2xvb3FwaHV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY1MDY1MjIsImV4cCI6MjA4MjA4MjUyMn0.FTKN4uvSnCtNClu34Zq3pP9ewVcgZ3q3s485n8VfDdY';
+
+        // Initialize Supabase (Uncomment when you have keys)
+        // const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // --- 2. APP LOGIC ---
+
+        const loginView = document.getElementById('login-view');
+        const dashboardView = document.getElementById('dashboard-view');
+        const projectsContainer = document.getElementById('projects-container');
+
+        // Fake Login for Demo purposes (Replace with Supabase Auth later)
+        function handleLogin() {
+            const email = document.getElementById('email').value;
+            if(!email) return alert("Please enter an email");
+
+            // In real app: await supabase.auth.signInWithOtp({ email: email })
+
+            document.getElementById('login-msg').classList.remove('hidden');
+            setTimeout(() => {
+                loginView.classList.add('hidden');
+                dashboardView.classList.remove('hidden');
+                loadDemoData(); // Load fake data for the preview
+            }, 1000);
+        }
+
+        function logout() {
+            // In real app: await supabase.auth.signOut()
+            window.location.reload();
+        }
+
+        // --- 3. RENDERING PROJECTS ---
+
+        function renderProjectCard(project) {
+            const statusColor = project.status === 'Completed' ? 'text-green-400 bg-green-400/10' : 'text-yellow-400 bg-yellow-400/10';
+            const isReady = project.status === 'Completed';
+
+            return `
+                <div class="glass-panel rounded-xl overflow-hidden transition hover:scale-[1.02] duration-200">
+                    <div class="h-48 bg-gray-800 relative group cursor-pointer">
+                        ${isReady
+                            ? `<img src="https://img.youtube.com/vi/${project.videoId}/hqdefault.jpg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
+                               <div class="absolute inset-0 flex items-center justify-center">
+                                   <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/30">
+                                       <div class="ml-1 w-0 h-0 border-t-[8px] border-t-transparent border-l-[12px] border-l-white border-b-[8px] border-b-transparent"></div>
+                                   </div>
+                               </div>`
+                            : `<div class="w-full h-full flex items-center justify-center text-gray-500 text-sm">Processing Footage...</div>`
+                        }
+                    </div>
+
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="font-bold text-lg leading-tight">${project.address}</h3>
+                            <span class="text-xs font-bold px-2 py-1 rounded ${statusColor}">${project.status}</span>
+                        </div>
+                        <p class="text-sm text-gray-400 mb-4">Shot on: ${project.date}</p>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <a href="${project.rawLink}" class="${isReady ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-800 text-gray-600 cursor-not-allowed'} text-white text-sm py-2 rounded-lg text-center font-medium transition flex items-center justify-center gap-2">
+                                ⬇ Raw Files
+                            </a>
+                            <button onclick="copyLink('${project.shareLink}')" class="${isReady ? 'bg-blue-600 hover:bg-blue-500' : 'bg-gray-800 text-gray-600 cursor-not-allowed'} text-white text-sm py-2 rounded-lg font-medium transition shadow-lg shadow-blue-500/20">
+                                🔗 Share
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function copyLink(link) {
+            navigator.clipboard.writeText(link);
+            alert("Link copied to clipboard! Ready to paste on Facebook/Zillow.");
+        }
+
+        // --- 4. FAKE DATA GENERATOR (Delete this when connecting Supabase) ---
+        function loadDemoData() {
+            const demoProjects = [
+                {
+                    address: "1402 Jones St, Omaha",
+                    date: "Oct 24, 2023",
+                    status: "Completed",
+                    videoId: "dQw4w9WgXcQ", // Youtube ID placeholder
+                    rawLink: "#",
+                    shareLink: "https://vimeo.com/example"
+                },
+                {
+                    address: "21505 Elkhorn Dr, Elkhorn",
+                    date: "Oct 26, 2023",
+                    status: "Completed",
+                    videoId: "dummy",
+                    rawLink: "#",
+                    shareLink: "https://vimeo.com/example"
+                },
+                {
+                    address: "8801 Pacific St, Omaha",
+                    date: "Today",
+                    status: "In Progress",
+                    videoId: "",
+                    rawLink: "#",
+                    shareLink: ""
+                }
+            ];
+
+            projectsContainer.innerHTML = demoProjects.map(renderProjectCard).join('');
+        }
+    </script>
+</body>
+</html>

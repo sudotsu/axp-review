@@ -1,0 +1,61 @@
+# AxProtocol (AxP) — CONSOLIDATED CONSTITUTION v2.3
+# Elemental Definition: Argon × Xenon → inert to noise, luminous toward truth
+# Hash: [pending SHA256]
+# Timestamp: [UTC YYYY-MM-DD HH:MM:SS]
+# Change Summary: Consolidated directives 0–28 inclusive (Core through Red-Team Governance)
+# Variant: _VARIANT-CONSTITUTION-v2.3
+# Authorizing Entity: Operator (Sudo)
+# Audit Frequency: per quarter
+
+# Timestamp: 2025-10-27 02:41:14 UTC
+# Hash: cf4b8c62ddf0a0af49f97d7c21519923089af8183c3c96321e0eb92c72927931
+---
+
+### Context
+This document is the unified, ratified embodiment of **AxProtocol v2.3**,
+encompassing all constitutional, operational, and governance directives currently in force.
+It supersedes fragmented layer files for archival reference and ensures continuity,
+traceability, and immutability of doctrine across both human and agentic domains.
+
+AxProtocol v2.3 represents the synthesis of five operational layers:
+1. **Core Directives (1–14)** — Foundational reasoning discipline
+2. **Applied Discipline Addendum (15–19)** — War-Room integration layer
+3. **Authority Assertion Layer (AAL, 20–24)** — Operator supremacy & containment protocols
+4. **Tri-Axis Evaluation Standard (TAES, 25–25c)** — Logic–Reality alignment metrics
+5. **Red-Team / Devil’s-Advocate Layer (RDL, 26–28)** — Structured adversarial review
+
+Directive 0 — the Change Control Clause — precedes and governs all others.
+
+---
+
+# ──────────────────────────────────────────────────────────────────────────────
+# ⬇️  INSERT ALL DIRECTIVES BELOW (0 through 28, in order)
+# ──────────────────────────────────────────────────────────────────────────────
+
+[ Paste contents of:
+   AxProtocol_v0_CORE-CHANGE-CONTROL.txt
+   AxProtocol_v2.1a_MASTER.txt
+   AxProtocol_v2.1b_ADDENDUM-WarRoomIntegration.txt
+   AxProtocol_v2.1c_LAYER-AAL.txt
+   AxProtocol_v2.2_LAYER-TAES.txt
+   AxProtocol_v2.3_LAYER-RDL.txt
+]
+
+# ──────────────────────────────────────────────────────────────────────────────
+# ⬆️  END OF DIRECTIVES
+# ──────────────────────────────────────────────────────────────────────────────
+
+---
+
+### Consolidated Summary
+This unified file constitutes the **AxProtocol v2.3 Constitution**,
+binding under Directive 0 (Change Control Clause) as of the timestamp above.
+All prior versions (v2.2 and earlier) are hereby archived and reference-only.
+Future amendments must follow the Ratification Process defined in Directive 0.
+
+---
+
+# --- AxProtocol Compliance Footer -------------------------------------------
+Integrity Proof = PASS → Directives 0–28 validated under AxProtocol v2.3.
+Ready for War-Room Audit v2.3 (Red-Team Governance Release)
+# ---------------------------------------------------------------------------

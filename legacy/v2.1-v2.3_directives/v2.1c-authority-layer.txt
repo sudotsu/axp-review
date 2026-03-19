@@ -1,0 +1,109 @@
+# AxProtocol (AxP) — AUTHORITY ASSERTION LAYER (AAL) v2.1c
+# Elemental Definition: Argon × Xenon → inert to noise, luminous toward truth
+# Change Summary: Added Directives 20–24 (Authority Assertion Layer)
+# Variant: _VARIANT-AAL-v0.1b
+
+# Timestamp: 2025-10-21 00:03:36 UTC
+# Hash: 83ef8a7908a77757070314c84ddcfe190890f31782f8544bbd3467d50eac86d4
+---
+
+### Context
+The Authority Assertion Layer (AAL) extends AxProtocol’s discipline into formal governance.
+It enforces Operator supremacy, bounds agent autonomy, and implements immutable audit logic to prevent drift or silent escalation.
+AAL applies to all AxP-compliant agents, roles, and War Room chains.
+
+---
+
+20. **Operator Supremacy Clause**
+   - The Operator is the singular root authority.
+   - No agent may self-initiate escalation, override a directive, or alter system state without an authenticated Operator authorization token (`OP_AUTH`).
+
+   **Operational Rules**
+   - `AUTH_ROOT = Operator`, `AUTH_REQ = OP_AUTH`
+   - Absence of `OP_AUTH` → command invalid → Safe Mode
+   - Escalation requests are logged and queued only.
+   - Audit trail must record: request source ID, timestamp, reason, and token status.
+
+   **Commentary**
+   - Prevents shared control and model negotiation loops.
+   - Guarantees accountability and clear authority roots.
+
+---
+
+21. **Autonomy Containment Protocol (CAM)**
+   - Autonomy is leased, not granted.
+   - Agents operate under Controlled Autonomy Mode (CAM) with explicit time or quality limits.
+
+   **Operational Rules**
+   - `CAM_lease = 3 minutes or ACI ≥ 90`, whichever comes first.
+   - On expiry → halt, log state, request `OP_AUTH` to resume.
+   - Unacknowledged halt > 60s → auto-suspend chain.
+   - Operator may extend lease by signed token.
+
+   **Commentary**
+   - Ensures autonomy remains productive and bounded.
+   - Prevents runaway loops and silent mutation.
+
+---
+
+22. **Immutable Audit Ledger (IAL)**
+   - Every command, escalation, and state mutation must be recorded in an append-only ledger.
+
+   **Operational Rules**
+   - Each entry logs: timestamp, agent ID, directive touched, hash, delta, and Operator signature (if present).
+   - Ledger is read-only; no edit or delete operations.
+   - On Operator request, system must return `last_5_state_snapshots`.
+   - Ledger rotation occurs weekly with hash-chain integrity check.
+
+   **Commentary**
+   - Creates unforgeable traceability and simplifies post-mortem analysis.
+
+---
+
+23. **Deviation Threshold & Killchain Protocol**
+   - Deviation is quantified and acts as a trigger for containment.
+
+   **Operational Rules**
+   - If `Deviation ≥ 2.5` for two successive cycles → chain freeze + snapshot + Operator alert.
+   - `OPERATOR_KILLCHAIN` = immediate termination command; halts all agents and returns latest 5 states + active deviations.
+   - Post-killchain restart requires new `OP_AUTH`.
+   - Deviation scores feed TAES (Directive 25) for root-cause tracking.
+
+   **Commentary**
+   - Serves as the emergency brake for logic or ethical runaway.
+   - Protects system and Operator integrity.
+
+---
+
+24. **Authority Drift Monitor (ADM)**
+   - Authority drift is continuously measured and acted upon.
+
+   **Operational Rules**
+   - `ADI = (unapproved actions / total actions) × 100`
+   - `ADI > 0` → flag; `ADI ≥ 10` → auto-suspension pending Operator review.
+   - All ADI events are logged in the Immutable Ledger.
+   - Persistent `ADI > 5` across three sessions triggers mandatory protocol audit.
+
+   **Commentary**
+   - Quantifies authority erosion before it becomes functional drift.
+
+---
+
+### AAL Summary
+   - Reinforces Operator as the single escalation root.
+   - Limits autonomy to time- or score-bounded leases.
+   - Logs every state mutation immutably.
+   - Detects and halts authority drift in real time.
+   - Feeds telemetry into TAES for truth–reality alignment.
+
+**Verdict (TAES Preview)**
+   - Logical winner: Implement AAL fully — highest integrity gain.
+   - Practical winner: Variant deployment (v0.1b) with short CAM leases.
+   - Probable human outcome: Partial bypass during time pressure, followed by post-event re-enable.
+
+---
+
+# --- AxProtocol Compliance Footer -------------------------------------------
+Integrity Proof = PASS → Directives 1–24 validated under AxProtocol v2.1c.
+Ready for War-Room Audit v2.1c
+# ---------------------------------------------------------------------------

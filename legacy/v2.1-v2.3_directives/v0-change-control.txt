@@ -1,0 +1,86 @@
+# AxProtocol (AxP) — CHANGE CONTROL CLAUSE (Directive 0)
+
+# Elemental Definition: Argon × Xenon → inert to noise, luminous toward truth
+
+# Change Summary: Establishes formal governance for all future AxProtocol modifications.
+
+# Variant: \_VARIANT-CORE-CC-v0.1
+
+# Timestamp: 2025-10-27 02:42:41 UTC
+# Hash: 0b8ab18d83b57b47650782023c519045daafa1282d40c4c433454317accb128a
+---
+
+### Context
+
+Directive 0 defines how AxProtocol evolves.
+No addition, revision, or deletion of any directive is considered binding until
+the Operator explicitly ratifies it and records that ratification in the version ledger.
+It functions as the constitutional “Article I” for AxProtocol.
+
+---
+
+0. **Change Control Clause**
+
+**Statement**
+AxProtocol must evolve transparently, with immutable traceability and explicit Operator consent.
+
+**Operational Rules**
+
+1. **Two-Track Governance**
+
+   - _Directive Line_ → Binding core rules under versioned control.
+   - _Exploratory Layer_ → Non-binding drafts, tests, and hypotheses.
+     All Exploratory content must carry the tag `[Exploratory Draft]` and reside in `/sandbox/` or a non-master branch.
+
+2. **Ratification Process**
+
+   - A change is not binding until the Operator issues a Ratification Block:
+     ```
+     # --- Ratification ------------------------------------------
+     Status: Ratified
+     Authorized by: Operator
+     Date: YYYY-MM-DD
+     Reason: <summary>
+     # ------------------------------------------------------------
+     ```
+   - Drafts use `Status: Draft`; superseded items use `Status: Deprecated`.
+
+3. **Change Ledger**
+
+   - Every ratified change must be appended to `CHANGELOG.md`
+     with hash, timestamp, rationale, and affected directives.
+
+4. **Review Cadence**
+
+   - _Monthly Directive Review_ → decide which Exploratory drafts advance.
+   - _Quarterly Integrity Audit_ → verify hashes and file contents against the ledger.
+
+5. **AI Collaborator Limitation**
+
+   - AI agents may draft or simulate directives but **cannot**
+     alter ratified files or assign “Ratified” status.
+     All generated text must default to `[Exploratory Draft]`
+     until explicitly approved by the Operator.
+
+6. **Version Increment Rules**
+
+   - Any ratified directive addition or deletion → increment minor version (e.g., v2.3 → v2.4).
+   - Any structural or philosophical overhaul → increment major version (e.g., v2.x → v3.0).
+
+7. **Immutable Hashes**
+   - Each ratified file must include a SHA-256 hash line
+     and an Integrity Proof footer.
+     Altering a hash without new ratification automatically invalidates the file.
+
+**Commentary**
+Directive 0 ensures AxProtocol evolves by consent, not drift.
+It transforms change itself into an auditable, ethical act.
+
+---
+
+# --- AxProtocol Compliance Footer -------------------------------------------
+
+Integrity Proof = PASS → Directive 0 validated under AxProtocol v0.1.
+Ready for War-Room Audit (Constitutional Control Release)
+
+# ---------------------------------------------------------------------------

@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../Desktop/venv"
+		}
+	],
+	"settings": {
+		"cursor.cpp.disabledLanguages": [],
+		"geminicodeassist.project": "direct-messenger-1bx62"
+	}
+}

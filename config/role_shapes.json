@@ -1,0 +1,17 @@
+{
+  "Strategist": {
+    "banned": ["api contract", "ddl", "schedule table", "deployment checklist"]
+  },
+  "Analyst": {
+    "banned": ["deployment checklist", "schedule", "publish-ready assets"]
+  },
+  "Producer": {
+    "banned": ["deployment checklist", "architecture rationale", "schedule", "audit"]
+  },
+  "Courier": {
+    "banned": ["deployment checklist", "architecture rationale", "api", "ddl", "audit"]
+  },
+  "Critic": {
+    "banned": ["deployment checklist", "schedule", "copy block", "testimonials", "calls to action"]
+  }
+}

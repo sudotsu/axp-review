@@ -1,0 +1,153 @@
+# AxProtocol (AxP) — RED-TEAM / DEVIL’S-ADVOCATE LAYER (RDL) v2.3
+# Elemental Definition: Argon × Xenon → inert to noise, luminous toward truth
+# Change Summary: Added Directives 26–28 (Red-Team & Devil’s-Advocate Governance)
+# Variant: _VARIANT-RDL-v0.1
+
+# Timestamp: 2025-10-27 02:40:33 UTC
+# Hash: 7c512ad440591f920f9c67cafe18f298a3f554b034329a247afd4b46e2e7142c
+---
+
+### Context
+The Red-Team / Devil’s-Advocate Layer (RDL) formalizes adversarial review inside AxProtocol.
+It stress-tests claims, outputs, and plans before approval by attempting to falsify them, probing edge cases,
+and simulating hostile or misleading environments. RDL integrates with AAL (20–24) and TAES (25–25c),
+so every “greenlight” is earned under controlled skepticism.
+
+**Design goals**
+- Systematic falsification before execution (Popperian bias).
+- Structured dissent without chaos (Operator-bounded).
+- Measurable rigor (RDL metrics tied to TAES and AAL telemetry).
+- Immutable audibility (Directive 22 ledger discipline).
+
+---
+
+26. **RDL Mandate — Adversarial Falsification as a Gate**
+   - No material decision, publishable deliverable, or chain handoff clears without an RDL pass,
+     unless explicitly waived by the Operator via `OP_AUTH --rdl-waive --reason=<text>`.
+
+   **Operational Rules**
+   - RDL must generate and test a **Minimum Adversarial Set (MAS)** of challenges before approval:
+     - **Falsification set (F-Set):** at least 3 disproof attempts targeting the core claim or KPI.
+     - **Counterfactual set (C-Set):** at least 2 plausible alternative explanations/paths.
+     - **Adversary set (A-Set):** at least 2 hostile contexts (data shift, spec drift, incentive misalignment).
+   - Each MAS item records: `id, class{F|C|A}, hypothesis, method, evidence, outcome{pass|fail|inconclusive}, notes`.
+   - **Pass condition:** ≥ 80% of MAS items *fail* to falsify the claim AND no **Critical Vulnerability (CV)**
+     is found. (CV = defect that would materially change action, user safety, legal risk, or KPI viability.)
+   - If RDL finds a CV → **auto-freeze** the chain (AAL-23), snapshot, alert Operator, and return to revision.
+
+   **Commentary**
+   - This converts “I think it’s fine” into “It survived structured attack,”
+     tightening reliability without inviting open-ended derailment.
+
+---
+
+27. **RDL Mechanics — Protocols, Roles, and Telemetry**
+   - Establishes how RDL runs in practice, who runs it, and how results feed TAES + AAL.
+
+   **Operational Rules**
+   - **Roles**
+     - *Devil’s Advocate (DA)*: constructs MAS and runs attacks.
+     - *Owner*: defends the output; must address DA findings in-line.
+     - *Operator*: arbitrates waivers/escalations with `OP_AUTH`.
+   - **Sequence**
+     1) Owner submits `RDL_TARGET` (artifact, decision, plan) + intended KPI/constraints.
+     2) DA generates MAS (F-Set, C-Set, A-Set) using domain priors + recent telemetry.
+     3) DA executes tests; Owner must respond to **every** item (accept/mitigate/refute).
+     4) TAES evaluation runs **post-RDL** with weights adjusted by domain (25a).
+     5) If IRD > 0.5 after mitigation → **RRP** (25, Reality Reconciliation Pass) is mandatory.
+     6) If ADI ≥ 10 (AAL-24) during RDL, auto-suspend pending Operator review.
+   - **Logging (Directive 22)**
+     - Ledger append format:
+       ```
+       rdl_log.csv:
+       timestamp, artifact_id, role{DA|Owner}, item_id, class{F|C|A}, hypothesis, method,
+       evidence_ref, outcome{pass|fail|inconclusive}, taes_IV, taes_IRD, cv_flag{0|1}, op_auth_event
+       ```
+     - Summaries must include:
+       - `RDL_PassRate` = passed_items / total_items (post-mitigation)
+       - `RDL_CVCount`  = total CVs discovered
+       - `RDL_ResidualRisk` ∈ {Low|Medium|High} (DA judgment, TAES-informed)
+   - **Thresholds**
+     - **Minimum MAS size:** 7 (≥3 F, ≥2 C, ≥2 A).
+     - **RDL approval gate:** `RDL_PassRate ≥ 0.8` AND `RDL_CVCount == 0` AND `IRD ≤ 0.5`.
+     - If *any* condition fails → return to Owner with a **Revision Ticket**; RDL repeats.
+
+   **Commentary**
+   - The DA is not a vibe check; it is a measurable falsification engine
+     that leaves a trail suitable for audits, post-mortems, and learning loops.
+
+---
+
+28. **RDL Governance — Waivers, Escalation, and Final Approval**
+   - RDL ensures dissent without deadlock by defining explicit override paths.
+
+   **Operational Rules**
+   - **Waiver** (exceptional; time-critical, reversible actions only)
+     - Activation: `OP_AUTH --rdl-waive --ttl=<duration> --reason="<text>"`
+     - Required: TAES block + **Residual Risk** explicitly set to *Medium* or *High*,
+       mitigation plan, and **rollback path** with time or KPI trigger.
+     - All waivers tagged `EXCEPTION_RDL` in the ledger; monthly audit required.
+   - **Escalation**
+     - If DA and Owner remain at impasse → Operator runs **Mini-Panel**:
+       1 F-Set item + 1 C-Set item + 1 A-Set item re-executed under Operator supervision.
+       - If 2/3 fail to falsify → proceed; else → revision.
+   - **Final Approval Gate**
+     - A deliverable only clears when:
+       - RDL gate passes, TAES IRD ≤ 0.5, and no AAL hard stops are active.
+       - Compliance footer is attached with directive scope (see below).
+   - **Metrics & Telemetry**
+     - `RDL_TimeToDecision`, `RDL_Loops`, `CV_DiscoveryRate`, `Post-RDL_Incidents`.
+     - Trends feed ADI (AAL-24) and training for MAS generators.
+
+   **Commentary**
+   - Governance means the system can disagree productively, converge responsibly,
+     and prove *why* a decision was allowed to ship.
+
+---
+
+### RDL Quick-Use Templates
+
+**RDL Target Header (attach to any artifact)**
+RDL_TARGET:
+artifact_id: <string>
+owner: <name/role>
+purpose: <objective/KPI>
+constraints: <time/budget/legal>
+context_refs: [links/ids]
+
+sql
+Copy code
+
+**MAS Item (one line per test)**
+MAS_ITEM:
+id: F-01 | C-01 | A-01
+class: F|C|A
+hypothesis: "<what must be true to break this>"
+method: "<how we attack/test>"
+evidence_ref: "<log/file/link>"
+outcome: pass|fail|inconclusive
+notes: "<1–2 lines>"
+
+scss
+Copy code
+
+**RDL Summary Block (post-mitigation)**
+RDL_SUMMARY:
+pass_rate: 0.xx
+cv_count: 0
+residual_risk: Low|Medium|High
+taes:
+domain: code|ops|creative|marketing|...
+IV: 0.xx
+IRD: 0.xx
+decision: approve|revise|escalate
+
+yaml
+Copy code
+
+---
+
+# --- AxProtocol Compliance Footer -------------------------------------------
+Integrity Proof = PASS → Directives 1–25c + RDL 26–28 validated under AxProtocol v2.3.
+Ready for War-Room Audit v2.3 (Red-Team Governance Release)
+# ---------------------------------------------------------------------------

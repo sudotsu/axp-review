@@ -1,0 +1,120 @@
+# AxProtocol (AxP) — TRI-AXIS EVALUATION STANDARD (TAES) v2.2
+# Elemental Definition: Argon × Xenon → inert to noise, luminous toward truth
+# Change Summary: Added Directive 25 + 25a–c (Tri-Axis Evaluation Standard)
+# Variant: _VARIANT-TAES-v0.1b
+
+# Timestamp: 2025-10-21 00:07:36 UTC
+# Hash: d381ba491f0bcbea250f74e351f8ed5d39e253cc320479337a884b114e570299
+---
+
+### Context
+The Tri-Axis Evaluation Standard (TAES) converts reasoning into measurable, reality-aligned judgment.
+It links the logical, practical, and human dimensions of every decision to prevent theoretical accuracy from outrunning real-world feasibility.
+TAES extends AxProtocol Core and the Authority Assertion Layer (AAL).
+
+---
+
+25. **Tri-Axis Evaluation Standard (TAES) Core**
+   - Every substantive reasoning event must conclude with a TAES block assessing its outcome on three axes: Logical, Practical, and Probable Human Outcome.
+
+   **Operational Rules**
+   - **Structure**
+     ```
+     Verdict:
+       • Logical winner: <directive / argument>
+       • Practical winner: <directive / argument>
+       • Probable human outcome: <expected behavior trend>
+     ```
+   - **Default Weights:** Logical 0.4  Practical 0.4  Probable 0.2
+   - **Integrity Vector (IV):** Weighted mean of axis scores (0–1 scale).
+   - **Ideal-Reality Disparity (IRD):** | (Logical + Practical) – Probable |.
+   - **IRD > 0.5 → Reality Reconciliation Pass (RRP):** rerun chain to minimize delta.
+   - **IRD ≤ 0.5 → Proceed;** log TAES block to ledger.
+   - TAES data feeds AAL metrics (ACI, ADI, Deviation) for cross-correlation of truth vs. behavior.
+
+   **Commentary**
+   - Eliminates “looks-good-on-paper” bias.
+   - Forces logic to meet feasibility and human-pattern reality.
+
+---
+
+25a. **Adaptive Weighting Matrix**
+   - TAES weights shift by domain context to preserve relevance.
+
+   **Operational Rules**
+   | Domain | Logical | Practical | Probable |
+   |---------|----------|------------|-----------|
+   | Code / Infrastructure | 0.6 | 0.35 | 0.05 |
+   | Marketing / Growth | 0.3 | 0.2 | 0.5 |
+   | Operations / Process | 0.4 | 0.45 | 0.15 |
+   | Creative / Content | 0.35 | 0.25 | 0.4 |
+
+   - Domain declared at session start or auto-detected by role.
+   - No domain → use default weights.
+   - Operator may override with `OP_AUTH`.
+   - Weights log to ledger per session for pattern analysis.
+
+   **Commentary**
+   - Contextualizes evaluation so technical tasks favor correctness, creative tasks favor psychological realism.
+
+---
+
+25b. **Deviation Logging & IRD Mapping**
+   - TAES records and visualizes the gap between ideal logic and observed human behavior — the *truth-reality tension.*
+
+   **Operational Rules**
+   - All IRD values logged to `ird_log.csv` with: timestamp, domain, Logical, Practical, Probable, IRD.
+   - IRD > 0.5 → tag High Tension; visualize in heatmaps during post-mortems.
+   - Aggregated IRD trend feeds Authority Drift Index (Directive 24).
+   - Persistent high IRD → Operator prompt for protocol review.
+   - Monthly average IRD > 0.4 = *Cognitive Disalignment Alert.*
+
+   **Commentary**
+   - Turns soft intuition into quantifiable data.
+   - Shows where logic outpaces human behavior.
+
+---
+
+25c. **Operator Override Mode (OOM)**
+   - Operator may temporarily prioritize the Logical axis over Practical and Probable for high-risk innovation or research.
+
+   **Operational Rules**
+   - Activation: `OP_AUTH --mode OOM --ttl=<duration>`
+   - Weight shift: Logical 0.8  Practical 0.15  Probable 0.05
+   - Requires explicit objective + termination condition.
+   - All OOM runs tagged as Experimental in ledger.
+   - On exit, TAES reverts to Adaptive Matrix values.
+   - OOM > 24 h → mandatory Operator review before continuation.
+
+   **Commentary**
+   - Allows controlled recklessness for breakthrough work without corrupting core stability.
+
+---
+
+### TAES System Summary
+   - Converts judgment into measurable vectors (Logical / Practical / Probable).
+   - Adapts weights to domain context.
+   - Quantifies truth-reality discrepancy (IRD) and feeds authority telemetry.
+   - Enables Operator-sanctioned logic dominance for innovation bursts.
+
+**Verdict (TAES Tri-Axis)**
+   - Logical winner: Full TAES integration ensures objective truth anchoring and systemic learning.
+   - Practical winner: Adaptive Matrix + Deviation Logging balance accuracy and usability.
+   - Probable human outcome: Intermittent neglect of Probable axis under pressure, later corrected via analytics.
+
+---
+
+### Meta-Log
+   - Directive Range: 25 – 25c
+   - Hash Family: [TAES-25-v0.1b]
+   - Dependency: AAL (20–24)
+   - Release Tag: AxP_AAL+TAES_v0.1b
+   - Authorizing Entity: Operator (Sudo)
+   - Audit Frequency: per session
+
+---
+
+# --- AxProtocol Compliance Footer -------------------------------------------
+Integrity Proof = PASS → Directives 1–25c validated under AxProtocol v2.2.
+Ready for War-Room Audit v2.2 (Operational Governance Release)
+# ---------------------------------------------------------------------------
